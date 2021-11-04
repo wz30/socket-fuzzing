@@ -25,9 +25,9 @@ void func(int sockfd)
 		bzero(buff, MAX);
 		n = 0;
 		// copy server message in the buffer
-		while ((buff[n++] = getchar()) != '\n')
-			;
-
+		// while ((buff[n++] = getchar()) != '\n')
+		// 	;
+		buff = "hi";
 		// and send that buffer to client
 		write(sockfd, buff, sizeof(buff));
 

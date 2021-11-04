@@ -4,7 +4,9 @@ fuzzing network stack(socket) library
 ## ToDo list
 - [x] fuzzer tutorial
 - [x] run basic server and client example
-- [x] only fuzzing client codes, server is up 
+- [ ] only fuzzing client codes, server is up 
+    - [ ] no input   
+- [ ] issue with simple fuzzer which just creates socket and always fail
 
 
 

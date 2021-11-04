@@ -13,7 +13,7 @@
 void func(int sockfd)
 {
 	char buff[MAX];
-	int n=0;
+	long n=0;
 	// infinite loop for chat
 	for (;;) {
 		bzero(buff, MAX);
@@ -23,7 +23,6 @@ void func(int sockfd)
 		// print buffer which contains the client contents
 		printf("From client: %s\t To client : ", buff);
 		bzero(buff, MAX);
-		n = 0;
 		// copy server message in the buffer
 		// while ((buff[n++] = getchar()) != '\n')
 		// 	;

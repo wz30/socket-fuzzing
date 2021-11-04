@@ -4,6 +4,7 @@ fuzzing network stack(socket) library
 ## ToDo list
 - [x] fuzzer tutorial
 - [x] run basic server and client example
+- [x] only fuzzing client codes, server is up 
 
 
 

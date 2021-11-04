@@ -9,14 +9,15 @@
 void func(int sockfd)
 {
 	char buff[MAX];
-	int n;
+	long n=0;
 	for (;;) {
 		bzero(buff, sizeof(buff));
 		// printf("Enter the string : ");
-		n = 0;
+		
 		// while ((buff[n++] = getchar()) != '\n')
 		// 	;
-		strcpy(buff,"hi");
+		sprintf(buff, "%ld", n++);
+		// strcpy(buff,"hi");
 		write(sockfd, buff, sizeof(buff));
 		bzero(buff, sizeof(buff));
 		read(sockfd, buff, sizeof(buff));

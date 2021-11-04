@@ -16,7 +16,7 @@ void func(int sockfd)
 		n = 0;
 		// while ((buff[n++] = getchar()) != '\n')
 		// 	;
-		buff = "hi";
+		strcpy(buff,"hi");
 		write(sockfd, buff, sizeof(buff));
 		bzero(buff, sizeof(buff));
 		read(sockfd, buff, sizeof(buff));

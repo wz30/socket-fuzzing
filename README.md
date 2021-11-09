@@ -7,6 +7,8 @@ fuzzing network stack(socket) library
 - [ ] only fuzzing client codes, server is up 
     - [ ] no input   
 - [ ] issue with simple fuzzer which just creates socket and always fail
+- [ ] generate correct workflows: correct server and client behaviors
+- [ ] test workflows
 
 
 

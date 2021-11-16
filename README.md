@@ -13,6 +13,7 @@ fuzzing network stack(socket) library
     - [ ] verify the behaviors after socket connecton is setup between nodes on server/client end
     - [ ] compare behaviors in linux socket and customized network stack library(such as slim, MTCP): cross check in libfuzzer
     - [ ] how to pass in multiple paramaters in libfizzer? Currently, the fuzzer api only provides chars array
+    - [ ] How to setup fuzzer to work with third party library?
 - [ ] design ACE-like framework to automatically generate correct workflows
     - [ ] what is a correct workflow? what are the variations?
     - [ ] how many socket apis are picked to generate the workflow: a meaningful combinaiton of socket API.

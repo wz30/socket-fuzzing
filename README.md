@@ -34,6 +34,6 @@ fuzzing network stack(socket) library
 - client 19832
 - I have two directions to dive into the problems
     - One, figure out expected fuzzer behaviros: pass in multiple parameters, only fuzzing after socket connection setuping
-    - Another, generate random workflows
+    - Another, generate random workflows with python
 ### reference
 - tcp/ip

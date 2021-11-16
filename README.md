@@ -17,11 +17,12 @@ fuzzing network stack(socket) library
     - [ ] what is a correct workflow? what are the variations?
     - [ ] how many socket apis are picked to generate the workflow: a meaningful combinaiton of socket API.
     - [ ] Do we generate C codes directly or use an intermediate layer like ACE? So far, not sure why ACE use an intermediate layer.
-    - [ ] If there is no bug in normal workflow, what others api(e.g. fork, epoll) are necessary to include?
+    - [ ] If there is no bug in normal workflow, what others api(e.g. fork, epoll) are necessary to include? To be specific, how many threads do we need to fork? how often do we need to fork them?
 - [ ] Search space for the workflow when fuzzing
     - [ ] which meaningful paramaters in socket API are needed to changed/fuzzed
     - [ ] what are the classic problems in socket? search famous bugs in linux socket library
     - [ ] when developers/company create their own network stack, what could be the common issues?
+    - [ ] Can SYN flood attacks apply into socket libraray
 - [ ] issue with simple fuzzer which just creates socket and always fail
 - [ ] generate correct workflows: correct server and client behaviors
 - [ ] test workflows
@@ -31,4 +32,8 @@ fuzzing network stack(socket) library
 ### Note for wei
 - slim: fuzzer 17285 (test client first) (gcc server.c -o server)
 - client 19832
-- reference: tcp/ip
+- I have two directions to dive into the problems
+    - One, figure out expected fuzzer behaviros: pass in multiple parameters, only fuzzing after socket connection setuping
+    - Another, generate random workflows
+### reference
+- tcp/ip

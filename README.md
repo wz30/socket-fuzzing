@@ -28,6 +28,11 @@ fuzzing network stack(socket) library
 - [ ] generate correct workflows: correct server and client behaviors
 - [ ] test workflows
 
+### Expected results
+- [ ] find at least one bug in Slim socket api.  Danyang mentioned epoll would be a good choice
+- [ ] find more bugs in other libraries such as MTCP
+- [ ] Build the framework that is easier to use with any third party library. (least priority)
+
 
 
 ### Note for wei

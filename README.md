@@ -17,7 +17,7 @@ fuzzing network stack(socket) library
     - [ ] what is a correct workflow? what are the variations?
     - [ ] how many socket apis are picked to generate the workflow: a meaningful combinaiton of socket API.
     - [ ] Do we generate C codes directly or use an intermediate layer like ACE? So far, not sure why ACE use an intermediate layer.
-    - [ ] If there is no bug in normal workflow, what others api(e.g. fork, epoll) are necessary to include? To be specific, how many threads do we need to fork? how often do we need to fork them?
+    - [ ] If there is no bug in normal workflow, what others api(e.g. fork, epoll) are necessary to include? To be specific, how many threads do we need to fork? how often do we need to fork them? Which port do i need to pick (reuse the port or start new port)?
 - [ ] Search space for the workflow when fuzzing
     - [ ] which meaningful paramaters in socket API are needed to changed/fuzzed
     - [ ] what are the classic problems in socket? search famous bugs in linux socket library

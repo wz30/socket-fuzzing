@@ -20,9 +20,8 @@ fuzzing network stack(socket) library
     - [ ] If there is no bug in normal workflow, what others api(e.g. fork, epoll) are necessary to include?
 - [ ] Search space for the workflow when fuzzing
     - [ ] which meaningful paramaters in socket API are needed to changed/fuzzed
-    - [ ] what are the classic problems in socket?
+    - [ ] what are the classic problems in socket? search famous bugs in linux socket library
     - [ ] when developers/company create their own network stack, what could be the common issues?
-    - [ ] 
 - [ ] issue with simple fuzzer which just creates socket and always fail
 - [ ] generate correct workflows: correct server and client behaviors
 - [ ] test workflows

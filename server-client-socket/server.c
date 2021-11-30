@@ -9,13 +9,15 @@
 #define PORT 8087
 #define SA struct sockaddr
 
+#define CHAT_TIMES 3
+
 // Function designed for chat between client and server.
 void func(int sockfd)
 {
 	char buff[MAX];
 	long n=0;
 	// infinite loop for chat
-	for (;;) {
+	while (n<CHAT_TIMES) {
 		bzero(buff, MAX);
 
 		// read the message from client and copy it in buffer

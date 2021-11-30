@@ -6,11 +6,13 @@
 #define MAX 80
 #define PORT 8087
 #define SA struct sockaddr
+
+#define CHAT_TIMES 3
 void func(int sockfd)
 {
 	char buff[MAX];
 	long n=0;
-	for (;;) {
+	while (n < CHAT_TIMES) {
 		bzero(buff, sizeof(buff));
 		// printf("Enter the string : ");
 		

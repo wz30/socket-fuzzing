@@ -4,23 +4,27 @@
 #include <string.h>
 #include <sys/socket.h>
 #define MAX 80
-#define PORT 8087
+#define PORT 7077
 #define SA struct sockaddr
-// function for chat
+
+#define CHAT_TIMES 3
+#define SERVER_IP "152.3.52.136"
 void func(int sockfd)
 {
 	char buff[MAX];
-	int n;
-	for (;;) {
+	long n=0;
+	while (n < CHAT_TIMES) {
 		bzero(buff, sizeof(buff));
-		printf("Enter the string : ");
-		n = 0;
-		while ((buff[n++] = getchar()) != '\n')
-			;
+		// printf("Enter the string : ");
+		
+		// while ((buff[n++] = getchar()) != '\n')
+		// 	;
+		sprintf(buff, "%ld", n++);
+		// strcpy(buff,"hi");
 		write(sockfd, buff, sizeof(buff));
 		bzero(buff, sizeof(buff));
 		read(sockfd, buff, sizeof(buff));
-		printf("From Server : %s", buff);
+		printf("From Server : %s\n", buff);
 		if ((strncmp(buff, "exit", 4)) == 0) {
 			printf("Client Exit...\n");
 			break;
@@ -45,7 +49,7 @@ int client_fuzzer(const char *Data, long long size)
 
 	// assign IP, PORT
 	servaddr.sin_family = AF_INET;
-	servaddr.sin_addr.s_addr = inet_addr("152.3.69.238");
+	servaddr.sin_addr.s_addr = inet_addr(SERVER_IP);
 	servaddr.sin_port = htons(PORT);
 
 	// connect the client socket to server socket

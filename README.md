@@ -47,6 +47,7 @@ fuzzing network stack(socket) library
 
 ### issues
 - sudo ufw allow portnum
+- netstat -na | grep "8080"
 ### reference
 - tcp/ip
 - google [libfuzzer tutorial](https://github.com/google/fuzzing/blob/master/tutorial/libFuzzerTutorial.md)

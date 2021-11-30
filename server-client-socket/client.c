@@ -8,6 +8,7 @@
 #define SA struct sockaddr
 
 #define CHAT_TIMES 3
+#define SERVER_IP "152.3.52.136"
 void func(int sockfd)
 {
 	char buff[MAX];
@@ -48,7 +49,7 @@ int main()
 
 	// assign IP, PORT
 	servaddr.sin_family = AF_INET;
-	servaddr.sin_addr.s_addr = inet_addr("152.3.69.238");
+	servaddr.sin_addr.s_addr = inet_addr("152.3.52.136");
 	servaddr.sin_port = htons(PORT);
 
 	// connect the client socket to server socket

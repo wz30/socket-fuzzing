@@ -6,7 +6,7 @@
 #include <sys/socket.h>
 #include <sys/types.h>
 #define MAX 80
-#define PORT 8087
+#define PORT 7077
 #define SA struct sockaddr
 
 #define CHAT_TIMES 3

@@ -33,6 +33,9 @@ fuzzing network stack(socket) library
 - [ ] find more bugs in other libraries such as MTCP
 - [ ] Build the framework that is easier to use with any third party library. (least priority)
 
+### How to run fuzzer
+- clang -g -fsanitize=address,fuzzer client-fuzzer.c 
+- clang++ -g -fsanitize=address,fuzzer client-fuzzer.c 
 
 
 ### Note for wei
@@ -41,5 +44,9 @@ fuzzing network stack(socket) library
 - I have two directions to dive into the problems
     - One, figure out expected fuzzer behaviros: pass in multiple parameters, only fuzzing after socket connection setuping
     - Another, generate random workflows with python
+
+### issues
+- sudo ufw allow portnum
 ### reference
 - tcp/ip
+- google [libfuzzer tutorial](https://github.com/google/fuzzing/blob/master/tutorial/libFuzzerTutorial.md)

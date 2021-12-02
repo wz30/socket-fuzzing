@@ -21,7 +21,8 @@ void func(int sockfd)
 		// 	;
 		sprintf(buff, "%ld", n++);
 		// strcpy(buff,"hi");
-		send(sockfd, buff, sizeof(buff), 0);
+		ssize_t ret_send = send(sockfd, buff, sizeof(buff), 0);
+		printf("send return value: %d\n", (ret_send)); 
 		bzero(buff, sizeof(buff));
 		recv(sockfd, buff, sizeof(buff), 0);
 		printf("From Server : %s\n", buff);

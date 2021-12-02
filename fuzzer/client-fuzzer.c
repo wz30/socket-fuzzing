@@ -21,7 +21,8 @@ void func(int sockfd)
 		// 	;
 		sprintf(buff, "%ld", n++);
 		// strcpy(buff,"hi");
-		send(sockfd, buff, sizeof(buff), 0);
+		ssize_t ret_send = send(sockfd, buff, sizeof(buff), 0);
+		printf("send return value: %d\n", ret_send);
 		bzero(buff, sizeof(buff));
 		recv(sockfd, buff, sizeof(buff), 0);
 		printf("From Server : %s\n", buff);
@@ -41,10 +42,15 @@ int client_fuzzer(const char *Data, long long size)
 	sockfd = socket(AF_INET, SOCK_STREAM, 0);
 	if (sockfd == -1) {
 		printf("socket creation failed...\n");
-		exit(0);
+		// exit(0);
+		return -1;
 	}
 	else
 		printf("Socket successfully created..\n");
+	
+	if (setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &(int){1}, sizeof(int)) < 0)
+		error("setsockopt(SO_REUSEADDR) failed");
+
 	bzero(&servaddr, sizeof(servaddr));
 
 	// assign IP, PORT
@@ -55,7 +61,8 @@ int client_fuzzer(const char *Data, long long size)
 	// connect the client socket to server socket
 	if (connect(sockfd, (SA*)&servaddr, sizeof(servaddr)) != 0) {
 		printf("connection with the server failed...\n");
-		exit(0);
+		// exit(0);
+		return -1;
 	}
 	else
 		printf("connected to the server..\n");
@@ -84,7 +91,11 @@ int client_fuzzer(const char *Data, long long size)
 	
 // 	return 0;
 // }
+int count = 0;
 int LLVMFuzzerTestOneInput(const char *Data, long long Size) {
+  printf("---------%d-------------\n", count++);
   client_fuzzer(Data, Size);
+  // why sleep 1 second: so client can connect properly
+//   sleep(1);
   return 0;
 }

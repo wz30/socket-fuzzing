@@ -33,6 +33,10 @@ fuzzing network stack(socket) library
 - [ ] find more bugs in other libraries such as MTCP
 - [ ] Build the framework that is easier to use with any third party library. (least priority)
 
+### Mini fuzzer
+- simple fuzzer
+- cross check with other library
+
 ### How to run fuzzer
 - clang -g -fsanitize=address,fuzzer client-fuzzer.c 
 - clang++ -g -fsanitize=address,fuzzer client-fuzzer.c 

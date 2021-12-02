@@ -21,9 +21,9 @@ void func(int sockfd)
 		// 	;
 		sprintf(buff, "%ld", n++);
 		// strcpy(buff,"hi");
-		write(sockfd, buff, sizeof(buff));
+		send(sockfd, buff, sizeof(buff), 0);
 		bzero(buff, sizeof(buff));
-		read(sockfd, buff, sizeof(buff));
+		recv(sockfd, buff, sizeof(buff), 0);
 		printf("From Server : %s\n", buff);
 		if ((strncmp(buff, "exit", 4)) == 0) {
 			printf("Client Exit...\n");

@@ -39,6 +39,8 @@ fuzzing network stack(socket) library
 
 ### Question
 - Does exit(0) matter in fuzzer? If fuzzer exit, it will report error. Should we use exit(0)(cli line 59) or not?
+    - no exit since it breaks the loop
+- How to make sure no connection failure in the client side
 
 ### How to run fuzzer
 - clang -g -fsanitize=address,fuzzer client-fuzzer.c 

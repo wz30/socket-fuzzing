@@ -34,8 +34,11 @@ fuzzing network stack(socket) library
 - [ ] Build the framework that is easier to use with any third party library. (least priority)
 
 ### Mini fuzzer
-- simple fuzzer
+- simple fuzzer with corpus
 - cross check with other library
+
+### Question
+- Does exit(0) matter in fuzzer? If fuzzer exit, it will report error. Should we use exit(0)(cli line 59) or not?
 
 ### How to run fuzzer
 - clang -g -fsanitize=address,fuzzer client-fuzzer.c 

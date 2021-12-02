@@ -48,10 +48,14 @@ int server_fuzzer(const char *Data, long long size)
 	sockfd = socket(AF_INET, SOCK_STREAM, 0);
 	if (sockfd == -1) {
 		printf("socket creation failed...\n");
-		exit(0);
+		// exit(0);
 	}
 	else
 		printf("Socket successfully created..\n");
+
+	if (setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &(int){1}, sizeof(int)) < 0)
+		error("setsockopt(SO_REUSEADDR) failed");
+
 	bzero(&servaddr, sizeof(servaddr));
 
 	// assign IP, PORT
@@ -62,7 +66,7 @@ int server_fuzzer(const char *Data, long long size)
 	// Binding newly created socket to given IP and verification
 	if ((bind(sockfd, (SA*)&servaddr, sizeof(servaddr))) != 0) {
 		printf("socket bind failed...\n");
-		exit(0);
+		// exit(0);
 	}
 	else
 		printf("Socket successfully binded..\n");
@@ -70,7 +74,7 @@ int server_fuzzer(const char *Data, long long size)
 	// Now server is ready to listen and verification
 	if ((listen(sockfd, 5)) != 0) {
 		printf("Listen failed...\n");
-		exit(0);
+		// exit(0);
 	}
 	else
 		printf("Server listening..\n");
@@ -78,9 +82,10 @@ int server_fuzzer(const char *Data, long long size)
 
 	// Accept the data packet from client and verification
 	connfd = accept(sockfd, (SA*)&cli, &len);
+	printf("fd: %d\n", connfd);
 	if (connfd < 0) {
 		printf("server accept failed...\n");
-		exit(0);
+		// exit(0);
 	}
 	else
 		printf("server accept the client...\n");
@@ -109,7 +114,10 @@ int server_fuzzer(const char *Data, long long size)
 	
 // 	return 0;
 // }
+int count = 0;
 int LLVMFuzzerTestOneInput(const char *Data, long long Size) {
+  printf("---------%d-------------\n", count++);
+  printf("%c\n", Data);
   server_fuzzer(Data, Size);
   return 0;
 }

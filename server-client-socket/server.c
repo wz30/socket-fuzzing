@@ -19,7 +19,7 @@ void func(int sockfd)
 		bzero(buff, MAX);
 
 		// read the message from client and copy it in buffer
-		read(sockfd, buff, sizeof(buff));
+		recv(sockfd, buff, sizeof(buff), 0);
 		// print buffer which contains the client contents
 		printf("From client: %s\t To client : ", buff);
 		bzero(buff, MAX);
@@ -29,7 +29,7 @@ void func(int sockfd)
 			;
 
 		// and send that buffer to client
-		write(sockfd, buff, sizeof(buff));
+		send(sockfd, buff, sizeof(buff), 0);
 
 		// if msg contains "Exit" then server exit and chat ended.
 		if (strncmp("exit", buff, 4) == 0) {

@@ -16,9 +16,9 @@ void func(int sockfd)
 		n = 0;
 		while ((buff[n++] = getchar()) != '\n')
 			;
-		write(sockfd, buff, sizeof(buff));
+		send(sockfd, buff, sizeof(buff), 0);
 		bzero(buff, sizeof(buff));
-		read(sockfd, buff, sizeof(buff));
+		recv(sockfd, buff, sizeof(buff), 0);
 		printf("From Server : %s", buff);
 		if ((strncmp(buff, "exit", 4)) == 0) {
 			printf("Client Exit...\n");

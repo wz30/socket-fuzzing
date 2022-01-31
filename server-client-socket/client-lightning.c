@@ -25,7 +25,7 @@ void func(int sockfd)
 		recv(sockfd, buff, sizeof(buff), 0);
 		printf("From Server : %s", buff);
 
-		// 
+		// master call "set "
 		// if(strncmp(buff, "set")){
 
 		// }else if(strncmp)

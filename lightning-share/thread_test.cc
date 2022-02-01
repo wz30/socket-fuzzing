@@ -14,7 +14,7 @@ std::mutex myMutex;
 void addToList(int max, int interval) 
 {
   // the access to this function is mutually exclusive
-  std::lock_guard<std::mutex> guard(myMutex);
+  // std::lock_guard<std::mutex> guard(myMutex);
   for(int i = 0; i < max; i++) {
     if( (i % interval) == 0) myList.push_back(i);
   }
@@ -22,11 +22,13 @@ void addToList(int max, int interval)
 
 void printList()
 {
-  std::lock_guard<std::mutex> guard(myMutex);
-  for(auto itr = myList.begin(), end_itr = myList.end(); itr != end_itr; ++itr) {
-    cout << *itr << ",";
+  // std::lock_guard<std::mutex> guard(myMutex);
+  while(1) {
+    for(auto itr = myList.begin(), end_itr = myList.end(); itr != end_itr; ++itr) {
+      cout << *itr << ",";
+    }
+    cout << endl;
   }
-  cout << endl;
 }
 
 int main() {

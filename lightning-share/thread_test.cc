@@ -3,7 +3,7 @@
 #include <list>
 #include <algorithm>
 #include <mutex>
-
+#include <unistd.h>
 using namespace std;
 
 // a global variable
@@ -28,6 +28,7 @@ void printList()
       cout << *itr << ",";
     }
     cout << endl;
+    sleep(5);
   }
 }
 
@@ -40,7 +41,7 @@ int main() {
   t1.join();
   t2.join();
   t3.join();
-  sleep(100);
+  //sleep(100);
 
   return 0;
 }

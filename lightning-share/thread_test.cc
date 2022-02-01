@@ -40,6 +40,7 @@ int main() {
   t1.join();
   t2.join();
   t3.join();
+  sleep(100);
 
   return 0;
 }

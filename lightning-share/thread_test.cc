@@ -26,6 +26,7 @@ void printList()
   for(auto itr = myList.begin(), end_itr = myList.end(); itr != end_itr; ++itr) {
     cout << *itr << ",";
   }
+  cout << endl;
 }
 
 int main() {

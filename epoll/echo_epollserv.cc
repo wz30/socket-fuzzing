@@ -6,10 +6,32 @@
 #include <sys/socket.h>
 #include <sys/epoll.h>
 #include <iostream>
+#include <thread>
+#include <list>
+#include <algorithm>
+#include <mutex>
+#include <unistd.h>
+using namespace std;
+
+// a global variable
+std::list<int> myList;
 
 #define BUF_SIZE 100
 #define EPOLL_SIZE 50
 void error_handling(char *message);
+
+void printList()
+{
+  // std::lock_guard<std::mutex> guard(myMutex);
+  while(1) {
+    for(auto itr = myList.begin(), end_itr = myList.end(); itr != end_itr; ++itr) {
+      cout << *itr << ",";
+    }
+    cout << endl;
+    sleep(5);
+  }
+}
+
 
 int main(int argc, char *argv[])
 {
@@ -28,6 +50,10 @@ int main(int argc, char *argv[])
         printf("Usage : %s <port> \n", argv[0]);
         exit(1);
     }
+    
+    // start thread to print list
+    std::thread t1(printList);
+
     serv_sock = socket(PF_INET, SOCK_STREAM, 0);
     memset(&serv_adr, 0, sizeof(serv_adr));
     serv_adr.sin_family = AF_INET;

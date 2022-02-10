@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <chrono>
 //#include <string.h>
 #include <unistd.h>
 #include <arpa/inet.h>
@@ -40,18 +41,27 @@ int main(int argc, char *argv[])
     while (1)
     {
         fputs("Input message(Q to quit): ", stdout);
-        fgets(message, BUF_SIZE, stdin);
-
+        //fgets(message, BUF_SIZE, stdin);
+	      strcpy(message, "set 1 100");
+        int num_tests = 100;
         if (!strcmp(message, "q\n") || !strcmp(message, "Q\n"))
             break;
 	std::string user = "[user]:";
 	std::string temp = user + std::string(message);
 	std::cout << temp << std::endl;
 //	std::cout << temp.c_str() <<std::endl;
-        send(sock, temp.c_str(), strlen(temp.c_str()), 0);
-        str_len = recv(sock, message, BUF_SIZE - 1, 0);
+        auto start = std::chrono::high_resolution_clock::now();
+        for(int i = 0; i<num_tests; i++) {
+          send(sock, temp.c_str(), strlen(temp.c_str()), 0);
+          str_len = recv(sock, message, BUF_SIZE - 1, 0);
+	      }
+        auto end = std::chrono::high_resolution_clock::now();
+	      std::chrono::duration<double> duration = end - start;
+        
+        std::cout << duration.count()/num_tests << ", ";
         message[str_len] = 0;
         printf("Message from server: %s\n", message);
+	sleep(5);
     }
     close(sock);
     return 0;

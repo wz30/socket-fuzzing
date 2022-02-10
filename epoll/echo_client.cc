@@ -156,19 +156,19 @@ int main(int argc, char *argv[])
 
     while (1)
     {
-//        fputs("Input message(Q to quit): ", stdout);
-//        fgets(message, BUF_SIZE, stdin);
+      // fputs("Input message(Q to quit): ", stdout);
+      // fgets(message, BUF_SIZE, stdin);
 
-        if (!strcmp(message, "q\n") || !strcmp(message, "Q\n"))
-            break;
+      if (!strcmp(message, "q\n") || !strcmp(message, "Q\n"))
+        break;
 
-//        write(sock, message, strlen(message));
-       str_len = recv(sock, message, BUF_SIZE - 1, 0);
+      // write(sock, message, strlen(message));
+      str_len = recv(sock, message, BUF_SIZE - 1, 0);
       //std::cout << "recving from server " << str_len << std::endl; 
-            message[str_len] = 0;
-            printf("Message from server: %s", message);
+      message[str_len] = 0;
+      printf("Message from server: %s", message);
       // todo check if contains user message
-      if( std::string(message).find("[user]") != std::string::npos)
+      if ( std::string(message).find("[user]") != std::string::npos)
       {
           std::cout << "processing the message and interacting with lightning." << std::endl;
           std::cout << message << std::endl;
@@ -187,10 +187,10 @@ int main(int argc, char *argv[])
 
           }
             std::cout << "send is finished" << std::endl;
-       }else {
+      } else {
           std::cout << "incorrect message from server" << std::endl; 
       }
-      }
+    }
     close(sock);
     return 0;
 }

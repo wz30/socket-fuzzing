@@ -45,7 +45,7 @@ int main(int argc, char *argv[])
         int num_tests = 100;
         std::chrono::duration<double> sum;
         // test get operation
-        for(int i = 0; i<num_tests; i++) {
+        for(int i = 2; i<num_tests; i++) {
             std::string str = "set "+std::to_string(i)+" 10"; 
             strcpy(message, str.c_str());
             
@@ -74,7 +74,7 @@ int main(int argc, char *argv[])
 
         std::chrono::duration<double> sum1;
         // test delete operation
-        for(int i = 0; i<num_tests; i++) {
+        for(int i = 2; i<num_tests; i++) {
             strcpy(message, ("delete "+std::to_string(i)).c_str());
             
             if (!strcmp(message, "q\n") || !strcmp(message, "Q\n"))

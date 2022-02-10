@@ -42,26 +42,32 @@ int main(int argc, char *argv[])
     {
         fputs("Input message(Q to quit): ", stdout);
         //fgets(message, BUF_SIZE, stdin);
-	      strcpy(message, "set 1 100");
         int num_tests = 100;
-        if (!strcmp(message, "q\n") || !strcmp(message, "Q\n"))
-            break;
-	std::string user = "[user]:";
-	std::string temp = user + std::string(message);
-	std::cout << temp << std::endl;
-//	std::cout << temp.c_str() <<std::endl;
-        auto start = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<double> sum = 0;
         for(int i = 0; i<num_tests; i++) {
-          send(sock, temp.c_str(), strlen(temp.c_str()), 0);
-          str_len = recv(sock, message, BUF_SIZE - 1, 0);
-	      }
-        auto end = std::chrono::high_resolution_clock::now();
-	      std::chrono::duration<double> duration = end - start;
-        
-        std::cout << duration.count()/num_tests << ", ";
-        message[str_len] = 0;
-        printf("Message from server: %s\n", message);
-	sleep(5);
+            strcpy(message, "set "+std::to_string(i)+" 10");
+            
+            if (!strcmp(message, "q\n") || !strcmp(message, "Q\n"))
+                break;
+            std::string user = "[user]:";
+            std::string temp = user + std::string(message);
+            std::cout << temp << std::endl;
+
+            //std::cout << temp.c_str() <<std::endl;
+            auto start = std::chrono::high_resolution_clock::now();
+            
+            send(sock, temp.c_str(), strlen(temp.c_str()), 0);
+            str_len = recv(sock, message, BUF_SIZE - 1, 0);
+            
+            auto end = std::chrono::high_resolution_clock::now();
+            std::chrono::duration<double> duration = end - start;
+            sum += duration;
+            // std::cout << duration.count()/num_tests << ", ";
+            message[str_len] = 0;
+            printf("Message from server: %s\n", message);
+        }
+        std::cout << "time" << sum/num_tests << std::endl;
+	    sleep(5);
     }
     close(sock);
     return 0;

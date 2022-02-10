@@ -70,10 +70,10 @@ int main(int argc, char *argv[])
         }
         std::cout << "time" << sum.count()/num_tests << std::endl;
  
-	    sleep(5);
+	      sleep(5);
 
+        std::chrono::duration<double> sum1;
         // test delete operation
-        sum ;
         for(int i = 0; i<num_tests; i++) {
             strcpy(message, ("delete "+std::to_string(i)).c_str());
             
@@ -91,12 +91,12 @@ int main(int argc, char *argv[])
             
             auto end = std::chrono::high_resolution_clock::now();
             std::chrono::duration<double> duration = end - start;
-            sum += duration;
+            sum1 += duration;
             // std::cout << duration.count()/num_tests << ", ";
             message[str_len] = 0;
             printf("Message from server: %s\n", message);
         }
-        std::cout << "averge delete time" << sum.count()/num_tests << std::endl;
+        std::cout << "averge delete time" << sum1.count()/num_tests << std::endl;
         sleep(5);
     }
     close(sock);

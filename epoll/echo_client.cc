@@ -75,7 +75,7 @@ int fake_delete(int id) {
 
 int light_delete(LightningClient &client, int id) {
 #ifndef DEBUG
-  std::cout << "inside lightning get function" << std::endl;
+  std::cout << "inside lightning delete function" << std::endl;
 #endif
   char *out;
   size_t size;
@@ -119,7 +119,7 @@ int process_msg(LightningClient &client,char *message){
     if(sep.size() != 2) {
       return -3;
     }
-    status = light_delete(std::stoi(sep[1]));
+    status = light_delete(client, std::stoi(sep[1]));
 
   } else if(std::string(message).find("mput") != std::string::npos) {
 

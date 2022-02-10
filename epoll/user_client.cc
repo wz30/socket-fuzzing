@@ -43,10 +43,11 @@ int main(int argc, char *argv[])
         fputs("Input message(Q to quit): ", stdout);
         //fgets(message, BUF_SIZE, stdin);
         int num_tests = 100;
-        std::chrono::duration<double> sum = 0;
+        std::chrono::duration<double> sum;
         // test get operation
         for(int i = 0; i<num_tests; i++) {
-            strcpy(message, "set "+std::to_string(i)+" 10");
+            std::string str = "set "+std::to_string(i)+" 10"; 
+            strcpy(message, str.c_str());
             
             if (!strcmp(message, "q\n") || !strcmp(message, "Q\n"))
                 break;
@@ -67,14 +68,14 @@ int main(int argc, char *argv[])
             message[str_len] = 0;
             printf("Message from server: %s\n", message);
         }
-        std::cout << "time" << sum/num_tests << std::endl;
+        std::cout << "time" << sum.count()/num_tests << std::endl;
  
 	    sleep(5);
 
         // test delete operation
-        sum = 0;
+        sum ;
         for(int i = 0; i<num_tests; i++) {
-            strcpy(message, "delete "+std::to_string(i));
+            strcpy(message, ("delete "+std::to_string(i)).c_str());
             
             if (!strcmp(message, "q\n") || !strcmp(message, "Q\n"))
                 break;
@@ -95,7 +96,7 @@ int main(int argc, char *argv[])
             message[str_len] = 0;
             printf("Message from server: %s\n", message);
         }
-        std::cout << "averge delete time" << sum/num_tests << std::endl;
+        std::cout << "averge delete time" << sum.count()/num_tests << std::endl;
         sleep(5);
     }
     close(sock);

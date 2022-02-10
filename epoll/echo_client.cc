@@ -37,7 +37,7 @@ int fake_set(int id, int obj_size) {
 
 int light_set(LightningClient &client, int id, int obj_size) {
   char *a = new char[obj_size];
-  for (int i = 0; i< < obj_size; i++) {
+  for (int i = 0; i < obj_size; i++) {
     a[i] = 'a';
   }
   uint8_t *ptr;
@@ -82,7 +82,7 @@ int fake_delete(int id) {
   -1: wrong status from lightning
 
 */
-int process_msg(Lightning &client,char *message){
+int process_msg(LightningClient &client,char *message){
   int status =  -1;
   if(std::string(message).find("set") != std::string::npos) {
     std::vector<std::string> sep = split(message, ' ');

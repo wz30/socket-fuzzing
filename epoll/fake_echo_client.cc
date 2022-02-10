@@ -73,16 +73,6 @@ int fake_delete(int id) {
   return 1;
 }
 
-int light_delete(LightningClient &client, int id) {
-#ifndef DEBUG
-  std::cout << "inside lightning get function" << std::endl;
-#endif
-  char *out;
-  size_t size;
-  int status = client.Delete(id);
-  return status;
-}
-
 
 
 // return status -1, -2, normal number
@@ -119,7 +109,7 @@ int process_msg(LightningClient &client,char *message){
     if(sep.size() != 2) {
       return -3;
     }
-    status = light_delete(std::stoi(sep[1]));
+    status = fake_delete(std::stoi(sep[1]));
 
   } else if(std::string(message).find("mput") != std::string::npos) {
 

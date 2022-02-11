@@ -17,6 +17,10 @@
 #define BUF_SIZE 100
 #define EPOLL_SIZE 50
 
+#define CLI_NUM 2
+// assume two lightning clients: 0-8190 8191-16383
+// assume threee lightning clients: 0-5500, 5501-11000, 11001-16383
+
 using namespace std;
 // a global variable tn hold fd
 std::vector<int> myList;
@@ -25,30 +29,68 @@ void error_handling(char *message);
 
 // get hash number between 0-MAX_HASH_SIZE  
 int hash(std::string str) {
-  std::hash<std::string> hash_fn;
-  int num = (int) hash_fn(str) % MAX_HASH_SIZE;
-#ifndef DEBUG
-std::cout << "hash num" << num << std::endl;
-#endif
 
-  return num;
+    std::hash<std::string> hash_fn;
+    int num = (int) hash_fn(str) % (MAX_HASH_SIZE+1);
+
+    #ifndef DEBUG
+    std::cout << "hash num" << num << std::endl;
+    #endif
+
+    return num;
 }
 
 
 void printList()
 {
-  // std::lock_guard<std::mutex> guard(myMutex);
-  std::cout << "print a vector of fds"<< std::endl;
-  while(1) {
-//      for (int i = 0; i<myList.size(); i++) {
-//        cout << myList[i] << endl;
-//      }
-    for(auto itr = myList.begin(), end_itr = myList.end(); itr != end_itr; ++itr) {
-      cout << *itr << ",";
+    std::lock_guard<std::mutex> guard(myMutex);
+    std::cout << "print a vector of fds"<< std::endl;
+    while(1) {
+        for(auto itr = myList.begin(), end_itr = myList.end(); itr != end_itr; ++itr) {
+            cout << *itr << ",";
+        }
+        cout << endl;
+        sleep(5);
     }
-    cout << endl;
-    sleep(5);
-  }
+}
+// get num-th fd from Mylist
+int get_fd_by_num(int user_fd, int num) {
+    for(int i = 0; i<num; i++) {
+        if(user_fd==myList[i]) {
+            return myList[num];
+        }
+    }
+    return myList[num-1];
+}
+
+
+// using hashing and assume the server will not leave the cluster
+// we need at least three servers
+int pick_client_hash(int user_fd, std::string id) {
+    assert(myList.size()>=2);
+    int res = -1;
+    int num = hash(id);
+    if (CLI_NUM == 2) {
+        if (num < 8190) {
+            // get first fd
+            res = get_fd_by_num(user_fd, 1);
+        }else {
+            res = get_fd_by_num(user_fd, 2);
+        }
+    }else if (CLI_NUM == 3) {
+        if (num < 5500) {
+            // get first fd
+            res = get_fd_by_num(user_fd, 1);
+        }else if (num >=5501 && num <11000) {
+            res = get_fd_by_num(user_fd, 2);
+        } else {
+            res = get_fd_by_num(user_fd, 3);
+        }
+
+    } else if(CLI_NUM == 1) {
+        res = get_fd_by_num(user_fd, 1);
+    }
+    return res;
 }
 
 // todo with consistent hashing
@@ -115,16 +157,16 @@ int main(int argc, char *argv[])
             break;
         }
 	
-	std::cout << event_cnt << std::endl;
+	    std::cout << event_cnt << std::endl;
         for (i = 0; i < event_cnt; i++)
         {
             if (ep_events[i].data.fd == serv_sock) //客户端请求连接时
             {
                 adr_sz = sizeof(clnt_adr);
                 clnt_sock = accept(serv_sock, (struct sockaddr *)&clnt_adr, &adr_sz);
-		myList.push_back(clnt_sock);
-		sort( myList.begin(), myList.end() );
-		myList.erase( unique( myList.begin(), myList.end() ), myList.end() );
+                myList.push_back(clnt_sock);
+                sort( myList.begin(), myList.end() );
+                myList.erase( unique( myList.begin(), myList.end() ), myList.end() );
 
                 event.events = EPOLLIN;
                 event.data.fd = clnt_sock; //把客户端套接字添加进去
@@ -133,30 +175,34 @@ int main(int argc, char *argv[])
             }
             else //是客户端套接字时
             {
-		memset(buf, 0, BUF_SIZE);
+		        memset(buf, 0, BUF_SIZE);
                 str_len = recv(ep_events[i].data.fd, buf, BUF_SIZE, 0);
-		std::cout << "message from client: " << buf <<" len: " <<str_len << std::endl;
+		        std::cout << "message from client: " << buf <<" len: " <<str_len << std::endl;
                 if (str_len == 0)
                 {
                     epoll_ctl(epfd, EPOLL_CTL_DEL, ep_events[i].data.fd, NULL); //从epoll中删除套接字
-		    myList.erase(std::remove(myList.begin(), myList.end(), ep_events[i].data.fd), myList.end());
-		    close(ep_events[i].data.fd);
-		    printf("closed client : %d \n", ep_events[i].data.fd);
+                    myList.erase(std::remove(myList.begin(), myList.end(), ep_events[i].data.fd), myList.end());
+                    close(ep_events[i].data.fd);
+                    printf("closed client : %d \n", ep_events[i].data.fd);
                 }
                 else if(std::string(buf).find("[user]") != string::npos)
-		{
-		    // only user's request contain [user]
-		    // trigger random pick the client 
-		    //todo: consistent hashing 
-		    int fd = pick_client(ep_events[i].data.fd);
-		    send(fd, buf, str_len, 0);
-		}
-		else
+                {
+                    // only user's request contain [user]
+                    // todo sanity check
+                    int id = get_id(buf);
+                    //todo: consistent hashing 
+                    int fd = pick_client_hash(ep_events[i].data.fd, std::to_string(id));
+#ifndef DEBUG
+std::cout << "forwarding message to: " << fd << std::endl;
+#endif
+                    send(fd, buf, str_len, 0);
+                }
+		        else
                 {  
-		   std::cout << "len: " << str_len << std::endl;
-		   std::cout << "sending message to user "<< buf << std::endl;  
-                   // todo add map relationship between cleint and user
-		   send(6, buf, str_len, 0);
+                    std::cout << "len: " << str_len << std::endl;
+                    std::cout << "sending message to user "<< buf << std::endl;  
+                    // todo add map relationship between cleint and user
+                    send(6, buf, str_len, 0);
                 }
             }
         }

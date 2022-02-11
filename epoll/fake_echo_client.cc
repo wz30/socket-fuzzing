@@ -11,9 +11,20 @@
 
 #include "client.h"
 #define DEBUG
-
+#define MAX_HASH_SIZE 16383  // range is 0-16383
 #define BUF_SIZE 1024
 void error_handling(char *message);
+
+// get hash number between 0-MAX_HASH_SIZE
+int hash(std::string str) {
+  std::hash<std::string> hash_fn;  
+ 
+  int num = (int) hash_fn(str) % MAX_HASH_SIZE;
+#ifndef DEBUG
+std::cout << "hash num " << num << std::endl; 
+#endif 
+  return num;
+}
 
 std::vector<std::string> split(std::string str, char del) {
   std::vector<std::string> internal; 
@@ -93,15 +104,16 @@ int process_msg(LightningClient &client,char *message){
     //   std::cout << t << std::endl;
     // }
     // std::cout << std::stoi(sep[2]) << std::endl;
-    //status = fake_set(std::stoi(sep[1]), std::stoi(sep[2]));
-    status = light_set(client, std::stoi(sep[1]), std::stoi(sep[2]));
+    status = fake_set(std::stoi(sep[1]), std::stoi(sep[2]));
+    //status = light_set(client, std::stoi(sep[1]), std::stoi(sep[2]));
   } else if(std::string(message).find("get") != std::string::npos) {
 
     std::vector<std::string> sep = split(message, ' ');
     if(sep.size() != 2) {
       return -3;
     }
-    status = light_get(client, std::stoi(sep[1]));
+    status = fake_get(std::stoi(sep[1]));
+    //status = light_get(client, std::stoi(sep[1]));
 
   } else if(std::string(message).find("delete") != std::string::npos) {
 

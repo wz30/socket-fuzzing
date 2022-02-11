@@ -12,15 +12,28 @@
 #include <algorithm>
 #include <mutex>
 #include <unistd.h>
+
+#define MAX_HASH_SIZE 16383  // range is 0-16383 
+#define BUF_SIZE 100
+#define EPOLL_SIZE 50
+
 using namespace std;
-
-
 // a global variable tn hold fd
 std::vector<int> myList;
 
-#define BUF_SIZE 100
-#define EPOLL_SIZE 50
 void error_handling(char *message);
+
+// get hash number between 0-MAX_HASH_SIZE  
+int hash(std::string str) {
+  std::hash<std::string> hash_fn;
+  int num = (int) hash_fn(str) % MAX_HASH_SIZE;
+#ifndef DEBUG
+std::cout << "hash num" << num << std::endl;
+#endif
+
+  return num;
+}
+
 
 void printList()
 {

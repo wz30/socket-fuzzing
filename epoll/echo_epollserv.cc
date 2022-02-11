@@ -12,6 +12,9 @@
 #include <algorithm>
 #include <mutex>
 #include <unistd.h>
+#include <assert.h>
+#include <sstream>
+
 
 #define MAX_HASH_SIZE 16383  // range is 0-16383 
 #define BUF_SIZE 100
@@ -28,7 +31,7 @@ std::vector<int> myList;
 void error_handling(char *message);
 
 // get hash number between 0-MAX_HASH_SIZE  
-int hash(std::string str) {
+int my_hash(std::string str) {
 
     std::hash<std::string> hash_fn;
     int num = (int) hash_fn(str) % (MAX_HASH_SIZE+1);
@@ -43,7 +46,7 @@ int hash(std::string str) {
 
 void printList()
 {
-    std::lock_guard<std::mutex> guard(myMutex);
+//    std::lock_guard<std::mutex> guard(myMutex);
     std::cout << "print a vector of fds"<< std::endl;
     while(1) {
         for(auto itr = myList.begin(), end_itr = myList.end(); itr != end_itr; ++itr) {
@@ -69,7 +72,7 @@ int get_fd_by_num(int user_fd, int num) {
 int pick_client_hash(int user_fd, std::string id) {
     assert(myList.size()>=2);
     int res = -1;
-    int num = hash(id);
+    int num = my_hash(id);
     if (CLI_NUM == 2) {
         if (num < 8190) {
             // get first fd
@@ -105,6 +108,24 @@ int pick_client(int user_fd)
     }while(user_fd==res);
     std::cout << "picked fd: " << res << std::endl;
     return res;  
+}
+std::vector<std::string> split(std::string str, char del) {
+    std::vector<std::string> internal; 
+    std::stringstream ss(str); // Turn the string into a stream. 
+    std::string tok; 
+ 
+    while(getline(ss, tok, del)) { 
+        internal.push_back(tok); 
+    } 
+ 
+    return internal;
+}
+
+int get_id(std::string buf) {
+    // [user]:set 1 100
+    std::vector<std::string> sep = split(buf, ' ');
+    // todo check status
+    return std::stoi(sep[1]); 
 }
 
 
@@ -202,7 +223,7 @@ std::cout << "forwarding message to: " << fd << std::endl;
                     std::cout << "len: " << str_len << std::endl;
                     std::cout << "sending message to user "<< buf << std::endl;  
                     // todo add map relationship between cleint and user
-                    send(6, buf, str_len, 0);
+                    send(7, buf, str_len, 0);
                 }
             }
         }

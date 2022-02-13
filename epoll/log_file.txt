@@ -1,0 +1,4 @@
+averge get time
+0.000260
+averge delete time
+0.000297

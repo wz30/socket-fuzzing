@@ -213,10 +213,13 @@ int main(int argc, char *argv[])
                     int id = get_id(buf);
                     //todo: consistent hashing 
                     int fd = pick_client_hash(ep_events[i].data.fd, std::to_string(id));
-#ifndef DEBUG
-std::cout << "forwarding message to: " << fd << std::endl;
+                    std::string new_buf = std::to_string(ep_events[i].data.fd) + ":" + std::string(buf); 
+#ifdef DEBUG
+std::cout << "forwarding message to client: " << fd << std::endl;
+std::cout << new_buf << std::endl;
 #endif
-                    send(fd, buf, str_len, 0);
+
+                    send(fd, new_buf.c_str(), str_len, 0);
                 }
 		        else
                 {  

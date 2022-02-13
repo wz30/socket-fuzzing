@@ -94,7 +94,7 @@ int main(int argc, char *argv[])
             
             if (!strcmp(message, "q\n") || !strcmp(message, "Q\n"))
                 break;
-            std::string user = "[user]:";
+            std::string user = "[user]";
             std::string temp = user + std::string(message);
             std::cout << temp << std::endl;
 

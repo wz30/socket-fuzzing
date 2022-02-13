@@ -6,9 +6,17 @@
 #include <sys/socket.h>
 #include <iostream>
 #include <cstring>
+#include <fstream>
 
+#define LOG_FILE "log_file.txt"
 #define BUF_SIZE 1024
 void error_handling(char *message);
+
+void write_log_file( const std::string &text )
+{
+    std::ofstream log_file(LOG_FILE, std::ios_base::out | std::ios_base::app );
+    log_file << text << std::endl;
+}
 
 int main(int argc, char *argv[])
 {
@@ -37,12 +45,17 @@ int main(int argc, char *argv[])
     else
         puts("Connected...........");
 
+    remove(LOG_FILE);
+    
+    int count = 0;
     while (1)
     {
         fputs("Input message(Q to quit): ", stdout);
         //fgets(message, BUF_SIZE, stdin);
         int num_tests = 100;
         double sum = 0;
+
+
         // test get operation
         for(int i = 2; i<num_tests; i++) {
             std::string str = "set "+std::to_string(i)+" 10"; 
@@ -67,7 +80,10 @@ int main(int argc, char *argv[])
             message[str_len] = 0;
             printf("Message from server: %s\n", message);
         }
-        std::cout << "time" << sum/num_tests << std::endl;
+        std::cout << "averge get time" << sum/num_tests << std::endl;
+
+        write_log_file("averge get time");
+        write_log_file(std::to_string(sum/num_tests));
  
 	    sleep(5);
 
@@ -96,7 +112,12 @@ int main(int argc, char *argv[])
             printf("Message from server: %s\n", message);
         }
         std::cout << "averge delete time" << sum/num_tests << std::endl;
+        write_log_file("averge delete time");
+        write_log_file(std::to_string(sum/num_tests));
         sleep(5);
+
+        count ++;
+        if(count==10) break;
     }
     close(sock);
     return 0;

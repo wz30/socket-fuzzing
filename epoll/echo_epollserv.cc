@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
+#include <cstring>
 #include <unistd.h>
 #include <arpa/inet.h>
 #include <sys/socket.h>
@@ -129,6 +129,18 @@ int get_id(std::string buf) {
     return std::stoi(sep[1]); 
 }
 
+//std::vector<std::string> split(std::string str, char del) {
+//  std::vector<std::string> internal; 
+//  std::stringstream ss(str); 
+//  std::string tok; 
+// 
+//  while(getline(ss, tok, del)) { 
+//    internal.push_back(tok); 
+//  } 
+// 
+//  return internal;
+//}
+
 
 int main(int argc, char *argv[])
 {
@@ -220,14 +232,16 @@ std::cout << "forwarding message to client: " << fd << std::endl;
 std::cout << new_buf << std::endl;
 #endif
 
-                    send(fd, new_buf.c_str(), str_len, 0);
+                    send(fd, new_buf.c_str(), new_buf.size(), 0);
                 }
 		        else
                 {  
                     std::cout << "len: " << str_len << std::endl;
                     std::cout << "sending message to user "<< buf << std::endl;  
                     // todo add map relationship between cleint and user
-                    send(7, buf, str_len, 0);
+                    std::vector<std::string> seps = split(buf, ':');
+                    std::cout << seps[0] << ":" << seps[1] << std::endl;
+                    send(std::stoi(seps[0]), seps[1].c_str(), std::strlen(seps[1].c_str()), 0);
                 }
             }
         }

@@ -111,7 +111,12 @@ int process_redis_msg(char *fd, char *message){
     // }
     // std::cout << std::stoi(sep[2]) << std::endl;
     //status = fake_set(std::stoi(sep[1]), std::stoi(sep[2]));
+    auto start = std::chrono::high_resolution_clock::now(); 
     status = redis_set(sep[1], sep[2]);
+    auto end = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> duration = end - start;
+    std::cout << "redis set time" << duration.count() << std::endl;
+
   } else if(std::string(message).find("get") != std::string::npos) {
 
     std::vector<std::string> sep = split(message, ' ');

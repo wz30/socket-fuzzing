@@ -80,9 +80,9 @@ int main(int argc, char *argv[])
             message[str_len] = 0;
             printf("Message from server: %s\n", message);
         }
-        std::cout << "averge get time" << sum/num_tests << std::endl;
+        std::cout << "averge set time" << sum/num_tests << std::endl;
 
-        write_log_file("averge get time");
+        write_log_file("averge set time");
         write_log_file(std::to_string(sum/num_tests));
  
 	    sleep(5);
@@ -90,7 +90,7 @@ int main(int argc, char *argv[])
         sum = 0;
         // test delete operation
         for(int i = 2; i<num_tests; i++) {
-            strcpy(message, ("delete "+std::to_string(i)).c_str());
+            strcpy(message, ("del "+std::to_string(i)).c_str());
             
             if (!strcmp(message, "q\n") || !strcmp(message, "Q\n"))
                 break;

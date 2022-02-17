@@ -1,0 +1,263 @@
+redis_client.cc: In function ‘int redis_set(sw::redis::Redis, std::string, std::string)’:
+redis_client.cc:44:30: error: expected ‘)’ before ‘value’
+   44 |   int status = client.set(key value);
+      |                          ~   ^~~~~~
+      |                              )
+redis_client.cc:44:36: error: no matching function for call to ‘sw::redis::Redis::set(std::string&)’
+   44 |   int status = client.set(key value);
+      |                                    ^
+In file included from /usr/local/include/sw/redis++/redis++.h:20,
+                 from redis_client.cc:11:
+/usr/local/include/sw/redis++/redis.h:915:10: note: candidate: ‘bool sw::redis::Redis::set(const StringView&, const StringView&, const milliseconds&, sw::redis::UpdateType)’
+  915 |     bool set(const StringView &key,
+      |          ^~~
+/usr/local/include/sw/redis++/redis.h:915:10: note:   candidate expects 4 arguments, 1 provided
+redis_client.cc: In function ‘int redis_get(sw::redis::Redis, std::string)’:
+redis_client.cc:63:5: error: ‘status’ was not declared in this scope; did you mean ‘std::filesystem::status’?
+   63 |     status = 1;
+      |     ^~~~~~
+      |     std::filesystem::status
+In file included from /usr/include/c++/9/filesystem:39,
+                 from /usr/include/aarch64-linux-gnu/c++/9/bits/stdc++.h:129,
+                 from redis_client.cc:12:
+/usr/include/c++/9/bits/fs_ops.h:292:15: note: ‘std::filesystem::status’ declared here
+  292 |   file_status status(const path& __p, error_code& __ec) noexcept;
+      |               ^~~~~~
+redis_client.cc:65:5: error: ‘status’ was not declared in this scope; did you mean ‘std::filesystem::status’?
+   65 |     status = -1;
+      |     ^~~~~~
+      |     std::filesystem::status
+In file included from /usr/include/c++/9/filesystem:39,
+                 from /usr/include/aarch64-linux-gnu/c++/9/bits/stdc++.h:129,
+                 from redis_client.cc:12:
+/usr/include/c++/9/bits/fs_ops.h:292:15: note: ‘std::filesystem::status’ declared here
+  292 |   file_status status(const path& __p, error_code& __ec) noexcept;
+      |               ^~~~~~
+redis_client.cc:67:10: error: ‘status’ was not declared in this scope; did you mean ‘std::filesystem::status’?
+   67 |   return status;
+      |          ^~~~~~
+      |          std::filesystem::status
+In file included from /usr/include/c++/9/filesystem:39,
+                 from /usr/include/aarch64-linux-gnu/c++/9/bits/stdc++.h:129,
+                 from redis_client.cc:12:
+/usr/include/c++/9/bits/fs_ops.h:292:15: note: ‘std::filesystem::status’ declared here
+  292 |   file_status status(const path& __p, error_code& __ec) noexcept;
+      |               ^~~~~~
+redis_client.cc: In function ‘int process_msg(char*, sw::redis::Redis, char*)’:
+redis_client.cc:114:46: error: use of deleted function ‘sw::redis::Redis::Redis(const sw::redis::Redis&)’
+  114 |     status = redis_set(client, sep[1], sep[2]);
+      |                                              ^
+In file included from /usr/local/include/sw/redis++/redis++.h:20,
+                 from redis_client.cc:11:
+/usr/local/include/sw/redis++/redis.h:86:5: note: declared here
+   86 |     Redis(const Redis &) = delete;
+      |     ^~~~~
+redis_client.cc:43:21: note:   initializing argument 1 of ‘int redis_set(sw::redis::Redis, std::string, std::string)’
+   43 | int redis_set(Redis client, std::string key, std::string val) {
+      |               ~~~~~~^~~~~~
+redis_client.cc:121:38: error: use of deleted function ‘sw::redis::Redis::Redis(const sw::redis::Redis&)’
+  121 |     status = redis_get(client, sep[1]);
+      |                                      ^
+In file included from /usr/local/include/sw/redis++/redis++.h:20,
+                 from redis_client.cc:11:
+/usr/local/include/sw/redis++/redis.h:86:5: note: declared here
+   86 |     Redis(const Redis &) = delete;
+      |     ^~~~~
+redis_client.cc:57:21: note:   initializing argument 1 of ‘int redis_get(sw::redis::Redis, std::string)’
+   57 | int redis_get(Redis client, std::string key) {
+      |               ~~~~~~^~~~~~
+redis_client.cc:129:41: error: use of deleted function ‘sw::redis::Redis::Redis(const sw::redis::Redis&)’
+  129 |     status = redis_delete(client, sep[1]);
+      |                                         ^
+In file included from /usr/local/include/sw/redis++/redis++.h:20,
+                 from redis_client.cc:11:
+/usr/local/include/sw/redis++/redis.h:86:5: note: declared here
+   86 |     Redis(const Redis &) = delete;
+      |     ^~~~~
+redis_client.cc:80:24: note:   initializing argument 1 of ‘int redis_delete(sw::redis::Redis, std::string)’
+   80 | int redis_delete(Redis client, std::string key) {
+      |                  ~~~~~~^~~~~~
+redis_client.cc: In function ‘int main(int, char**)’:
+redis_client.cc:160:24: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+  160 |         error_handling("socket() error");
+      |                        ^~~~~~~~~~~~~~~~
+redis_client.cc:168:24: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+  168 |         error_handling("connect() error!");
+      |                        ^~~~~~~~~~~~~~~~~~
+redis_client.cc:198:50: error: use of deleted function ‘sw::redis::Redis::Redis(const sw::redis::Redis&)’
+  198 |           status = process_msg(fd, redis, message);
+      |                                                  ^
+In file included from /usr/local/include/sw/redis++/redis++.h:20,
+                 from redis_client.cc:11:
+/usr/local/include/sw/redis++/redis.h:86:5: note: declared here
+   86 |     Redis(const Redis &) = delete;
+      |     ^~~~~
+redis_client.cc:97:33: note:   initializing argument 2 of ‘int process_msg(char*, sw::redis::Redis, char*)’
+   97 | int process_msg(char *fd, Redis client, char *message){
+      |                           ~~~~~~^~~~~~
+redis_client.cc: In function ‘int redis_get(sw::redis::Redis, std::string)’:
+redis_client.cc:63:5: error: ‘status’ was not declared in this scope; did you mean ‘std::filesystem::status’?
+   63 |     status = 1;
+      |     ^~~~~~
+      |     std::filesystem::status
+In file included from /usr/include/c++/9/filesystem:39,
+                 from /usr/include/aarch64-linux-gnu/c++/9/bits/stdc++.h:129,
+                 from redis_client.cc:12:
+/usr/include/c++/9/bits/fs_ops.h:292:15: note: ‘std::filesystem::status’ declared here
+  292 |   file_status status(const path& __p, error_code& __ec) noexcept;
+      |               ^~~~~~
+redis_client.cc:65:5: error: ‘status’ was not declared in this scope; did you mean ‘std::filesystem::status’?
+   65 |     status = -1;
+      |     ^~~~~~
+      |     std::filesystem::status
+In file included from /usr/include/c++/9/filesystem:39,
+                 from /usr/include/aarch64-linux-gnu/c++/9/bits/stdc++.h:129,
+                 from redis_client.cc:12:
+/usr/include/c++/9/bits/fs_ops.h:292:15: note: ‘std::filesystem::status’ declared here
+  292 |   file_status status(const path& __p, error_code& __ec) noexcept;
+      |               ^~~~~~
+redis_client.cc:67:10: error: ‘status’ was not declared in this scope; did you mean ‘std::filesystem::status’?
+   67 |   return status;
+      |          ^~~~~~
+      |          std::filesystem::status
+In file included from /usr/include/c++/9/filesystem:39,
+                 from /usr/include/aarch64-linux-gnu/c++/9/bits/stdc++.h:129,
+                 from redis_client.cc:12:
+/usr/include/c++/9/bits/fs_ops.h:292:15: note: ‘std::filesystem::status’ declared here
+  292 |   file_status status(const path& __p, error_code& __ec) noexcept;
+      |               ^~~~~~
+redis_client.cc: In function ‘int process_msg(char*, sw::redis::Redis, char*)’:
+redis_client.cc:114:46: error: use of deleted function ‘sw::redis::Redis::Redis(const sw::redis::Redis&)’
+  114 |     status = redis_set(client, sep[1], sep[2]);
+      |                                              ^
+In file included from /usr/local/include/sw/redis++/redis++.h:20,
+                 from redis_client.cc:11:
+/usr/local/include/sw/redis++/redis.h:86:5: note: declared here
+   86 |     Redis(const Redis &) = delete;
+      |     ^~~~~
+redis_client.cc:43:21: note:   initializing argument 1 of ‘int redis_set(sw::redis::Redis, std::string, std::string)’
+   43 | int redis_set(Redis client, std::string key, std::string val) {
+      |               ~~~~~~^~~~~~
+redis_client.cc:121:38: error: use of deleted function ‘sw::redis::Redis::Redis(const sw::redis::Redis&)’
+  121 |     status = redis_get(client, sep[1]);
+      |                                      ^
+In file included from /usr/local/include/sw/redis++/redis++.h:20,
+                 from redis_client.cc:11:
+/usr/local/include/sw/redis++/redis.h:86:5: note: declared here
+   86 |     Redis(const Redis &) = delete;
+      |     ^~~~~
+redis_client.cc:57:21: note:   initializing argument 1 of ‘int redis_get(sw::redis::Redis, std::string)’
+   57 | int redis_get(Redis client, std::string key) {
+      |               ~~~~~~^~~~~~
+redis_client.cc:129:41: error: use of deleted function ‘sw::redis::Redis::Redis(const sw::redis::Redis&)’
+  129 |     status = redis_delete(client, sep[1]);
+      |                                         ^
+In file included from /usr/local/include/sw/redis++/redis++.h:20,
+                 from redis_client.cc:11:
+/usr/local/include/sw/redis++/redis.h:86:5: note: declared here
+   86 |     Redis(const Redis &) = delete;
+      |     ^~~~~
+redis_client.cc:80:24: note:   initializing argument 1 of ‘int redis_delete(sw::redis::Redis, std::string)’
+   80 | int redis_delete(Redis client, std::string key) {
+      |                  ~~~~~~^~~~~~
+redis_client.cc: In function ‘int main(int, char**)’:
+redis_client.cc:160:24: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+  160 |         error_handling("socket() error");
+      |                        ^~~~~~~~~~~~~~~~
+redis_client.cc:168:24: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+  168 |         error_handling("connect() error!");
+      |                        ^~~~~~~~~~~~~~~~~~
+redis_client.cc:198:50: error: use of deleted function ‘sw::redis::Redis::Redis(const sw::redis::Redis&)’
+  198 |           status = process_msg(fd, redis, message);
+      |                                                  ^
+In file included from /usr/local/include/sw/redis++/redis++.h:20,
+                 from redis_client.cc:11:
+/usr/local/include/sw/redis++/redis.h:86:5: note: declared here
+   86 |     Redis(const Redis &) = delete;
+      |     ^~~~~
+redis_client.cc:97:33: note:   initializing argument 2 of ‘int process_msg(char*, sw::redis::Redis, char*)’
+   97 | int process_msg(char *fd, Redis client, char *message){
+      |                           ~~~~~~^~~~~~
+redis_client.cc: In function ‘int redis_get(sw::redis::Redis, std::string)’:
+redis_client.cc:63:5: error: ‘status’ was not declared in this scope; did you mean ‘std::filesystem::status’?
+   63 |     status = 1;
+      |     ^~~~~~
+      |     std::filesystem::status
+In file included from /usr/include/c++/9/filesystem:39,
+                 from /usr/include/aarch64-linux-gnu/c++/9/bits/stdc++.h:129,
+                 from redis_client.cc:12:
+/usr/include/c++/9/bits/fs_ops.h:292:15: note: ‘std::filesystem::status’ declared here
+  292 |   file_status status(const path& __p, error_code& __ec) noexcept;
+      |               ^~~~~~
+redis_client.cc:65:5: error: ‘status’ was not declared in this scope; did you mean ‘std::filesystem::status’?
+   65 |     status = -1;
+      |     ^~~~~~
+      |     std::filesystem::status
+In file included from /usr/include/c++/9/filesystem:39,
+                 from /usr/include/aarch64-linux-gnu/c++/9/bits/stdc++.h:129,
+                 from redis_client.cc:12:
+/usr/include/c++/9/bits/fs_ops.h:292:15: note: ‘std::filesystem::status’ declared here
+  292 |   file_status status(const path& __p, error_code& __ec) noexcept;
+      |               ^~~~~~
+redis_client.cc:67:10: error: ‘status’ was not declared in this scope; did you mean ‘std::filesystem::status’?
+   67 |   return status;
+      |          ^~~~~~
+      |          std::filesystem::status
+In file included from /usr/include/c++/9/filesystem:39,
+                 from /usr/include/aarch64-linux-gnu/c++/9/bits/stdc++.h:129,
+                 from redis_client.cc:12:
+/usr/include/c++/9/bits/fs_ops.h:292:15: note: ‘std::filesystem::status’ declared here
+  292 |   file_status status(const path& __p, error_code& __ec) noexcept;
+      |               ^~~~~~
+redis_client.cc: In function ‘int process_redis_msg(char*, sw::redis::Redis, char*)’:
+redis_client.cc:114:46: error: use of deleted function ‘sw::redis::Redis::Redis(const sw::redis::Redis&)’
+  114 |     status = redis_set(client, sep[1], sep[2]);
+      |                                              ^
+In file included from /usr/local/include/sw/redis++/redis++.h:20,
+                 from redis_client.cc:11:
+/usr/local/include/sw/redis++/redis.h:86:5: note: declared here
+   86 |     Redis(const Redis &) = delete;
+      |     ^~~~~
+redis_client.cc:43:21: note:   initializing argument 1 of ‘int redis_set(sw::redis::Redis, std::string, std::string)’
+   43 | int redis_set(Redis client, std::string key, std::string val) {
+      |               ~~~~~~^~~~~~
+redis_client.cc:121:38: error: use of deleted function ‘sw::redis::Redis::Redis(const sw::redis::Redis&)’
+  121 |     status = redis_get(client, sep[1]);
+      |                                      ^
+In file included from /usr/local/include/sw/redis++/redis++.h:20,
+                 from redis_client.cc:11:
+/usr/local/include/sw/redis++/redis.h:86:5: note: declared here
+   86 |     Redis(const Redis &) = delete;
+      |     ^~~~~
+redis_client.cc:57:21: note:   initializing argument 1 of ‘int redis_get(sw::redis::Redis, std::string)’
+   57 | int redis_get(Redis client, std::string key) {
+      |               ~~~~~~^~~~~~
+redis_client.cc:129:41: error: use of deleted function ‘sw::redis::Redis::Redis(const sw::redis::Redis&)’
+  129 |     status = redis_delete(client, sep[1]);
+      |                                         ^
+In file included from /usr/local/include/sw/redis++/redis++.h:20,
+                 from redis_client.cc:11:
+/usr/local/include/sw/redis++/redis.h:86:5: note: declared here
+   86 |     Redis(const Redis &) = delete;
+      |     ^~~~~
+redis_client.cc:80:24: note:   initializing argument 1 of ‘int redis_delete(sw::redis::Redis, std::string)’
+   80 | int redis_delete(Redis client, std::string key) {
+      |                  ~~~~~~^~~~~~
+redis_client.cc: In function ‘int main(int, char**)’:
+redis_client.cc:160:24: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+  160 |         error_handling("socket() error");
+      |                        ^~~~~~~~~~~~~~~~
+redis_client.cc:168:24: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+  168 |         error_handling("connect() error!");
+      |                        ^~~~~~~~~~~~~~~~~~
+redis_client.cc:198:56: error: use of deleted function ‘sw::redis::Redis::Redis(const sw::redis::Redis&)’
+  198 |           status = process_redis_msg(fd, redis, message);
+      |                                                        ^
+In file included from /usr/local/include/sw/redis++/redis++.h:20,
+                 from redis_client.cc:11:
+/usr/local/include/sw/redis++/redis.h:86:5: note: declared here
+   86 |     Redis(const Redis &) = delete;
+      |     ^~~~~
+redis_client.cc:97:39: note:   initializing argument 2 of ‘int process_redis_msg(char*, sw::redis::Redis, char*)’
+   97 | int process_redis_msg(char *fd, Redis client, char *message){
+      |                                 ~~~~~~^~~~~~

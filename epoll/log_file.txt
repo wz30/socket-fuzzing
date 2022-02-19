@@ -1,4 +1,4 @@
 averge set time
-0.000252
+0.000430
 averge delete time
-0.000311
+0.000335

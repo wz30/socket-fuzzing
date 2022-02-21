@@ -66,13 +66,6 @@ int light_get(LightningClient &client, int id) {
   int status = client.Get(id, (uint8_t **)&out, &size);
   return status;
 }
-int fake_delete(int id) {
-  std::cout << "inside fake delete function" <<std::endl;
-  if(id < 0) return -1;
-  // sleep(1);
-  return 1;
-}
-
 
 int fake_delete( int id) {
 #ifdef DEBUG

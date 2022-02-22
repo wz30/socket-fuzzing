@@ -52,7 +52,7 @@ int main(int argc, char *argv[])
     {
         fputs("Input message(Q to quit): ", stdout);
         //fgets(message, BUF_SIZE, stdin);
-        int num_tests = 100;
+        int num_tests = 4;
         double sum = 0;
 
 

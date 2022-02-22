@@ -1,0 +1,40 @@
+averge set time
+0.001347
+averge delete time
+0.000341
+averge set time
+0.000454
+averge delete time
+0.000469
+averge set time
+0.000447
+averge delete time
+0.000437
+averge set time
+0.000751
+averge delete time
+0.000397
+averge set time
+0.000514
+averge delete time
+0.000709
+averge set time
+0.000387
+averge delete time
+0.000289
+averge set time
+0.001005
+averge delete time
+0.000390
+averge set time
+0.000453
+averge delete time
+0.000582
+averge set time
+0.000446
+averge delete time
+0.000373
+averge set time
+0.000557
+averge delete time
+0.000414

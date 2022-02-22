@@ -14,7 +14,7 @@
 #include <unistd.h>
 #include <assert.h>
 #include <sstream>
-
+#include <chrono>
 
 #define MAX_HASH_SIZE 16383  // range is 0-16383 
 #define BUF_SIZE 100
@@ -210,7 +210,11 @@ int main(int argc, char *argv[])
             else //是客户端套接字时
             {
 		        memset(buf, 0, BUF_SIZE);
+                auto start = std::chrono::high_resolution_clock::now();               
                 str_len = recv(ep_events[i].data.fd, buf, BUF_SIZE, 0);
+                auto end = std::chrono::high_resolution_clock::now();
+                std::chrono::duration<double> duration = end - start;
+                std::cout << "recv duration: " << duration.count() << std::endl;
 		        std::cout << "message from client: " << buf <<" len: " <<str_len << std::endl;
                 if (str_len == 0)
                 {
@@ -231,8 +235,11 @@ int main(int argc, char *argv[])
 std::cout << "forwarding message to client: " << fd << std::endl;
 std::cout << new_buf << std::endl;
 #endif
-
+                    auto start = std::chrono::high_resolution_clock::now();
                     send(fd, new_buf.c_str(), new_buf.size(), 0);
+                    auto end = std::chrono::high_resolution_clock::now();
+                    std::chrono::duration<double> duration = end - start;
+                    std::cout << "send duration: " << duration.count() << std::endl;
                 }
 		        else
                 {  

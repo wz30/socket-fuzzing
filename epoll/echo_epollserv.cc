@@ -14,7 +14,9 @@
 #include <unistd.h>
 #include <assert.h>
 #include <sstream>
-
+#include <sys/ioctl.h>
+int on = 1;
+int off = 1;
 
 #define MAX_HASH_SIZE 16383  // range is 0-16383 
 #define BUF_SIZE 100
